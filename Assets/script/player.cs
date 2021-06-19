@@ -23,7 +23,7 @@ public class player : MonoBehaviour
          
         horizontal = Input.GetAxisRaw("Horizontal");
 
-        Animator.SetBool("runnig", horizontal != 0.0f);
+       
 
         if (horizontal < 0.0f) transform.localScale = new Vector3(-1.0f,1.0f,1.0f);
         else if(horizontal > 0.0f) transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
@@ -40,11 +40,18 @@ public class player : MonoBehaviour
         {
 
             Grounded = false;
+            
         }
 
-        if(Input.GetKeyDown(KeyCode.W) && Grounded)
+        Animator.SetBool("runnig", horizontal != 0.0f);
+        Animator.SetBool("jumping", (Grounded == false));  
+        Animator.SetBool("jumpIdle", (horizontal == 0.0f && !Grounded));
+
+        if (Input.GetKeyDown(KeyCode.W) && Grounded)
         {
+
             Jump();
+
         }
         
     }
@@ -61,5 +68,6 @@ public class player : MonoBehaviour
     private void Jump()
     {
         Rigidbody2D.AddForce(Vector2.up * JumpForce);
+       
     }
 }
